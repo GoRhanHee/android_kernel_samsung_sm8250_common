@@ -2,8 +2,6 @@
 
 KERNEL_DIR=$(pwd)
 DEVICE="$1"
-DEVICE2="$2"
-DEVICE3="$3"
 
 build_kernel() {
     echo "-----------------------------------------------"
@@ -62,8 +60,9 @@ prepare_ak3() {
     mv "$KERNEL_DIR/out/arch/arm64/boot/dts/dtb" dtb
 
     sed -i "s/^device\.name1=.*/device.name1=${DEVICE}/" anykernel.sh
-    sed -i "s/^device\.name2=.*/device.name2=${DEVICE2}/" anykernel.sh
-    sed -i "s/^device\.name3=.*/device.name2=${DEVICE3}/" anykernel.sh
+
+    ZIP_NAME="PrimeKernel-${DEVICE}.zip"
+    zip -r "../${ZIP_NAME}"
 
     cd "$KERNEL_DIR"
 }
