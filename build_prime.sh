@@ -22,11 +22,12 @@ build_kernel() {
 CONFIG_THINLTO=y
 # CONFIG_LTO_NONE is not set
 CONFIG_LTO_CLANG=y
+# CONFIG_CC_WERROR is not set
 
 CONFIG_LOCALVERSION="-PrimeKernel"
     " >> arch/arm64/configs/temp_defconfig
 
-    make $BUILD_VAR temp_defconfig
+    make $BUILD_VAR temp_defconfig || exit 1
     rm arch/arm64/configs/temp_defconfig
 }
 
@@ -62,7 +63,7 @@ prepare_ak3() {
     sed -i "s/^device\.name1=.*/device.name1=${DEVICE}/" anykernel.sh
 
     ZIP_NAME="PrimeKernel-${DEVICE}.zip"
-    zip -r "../${ZIP_NAME}"
+    zip -r "../${ZIP_NAME}" *
 
     cd "$KERNEL_DIR"
 }
